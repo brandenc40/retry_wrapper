@@ -2,7 +2,8 @@
 
 Adds retries to your functions with the optional email on failure. Useful for scheduled jobs or very long scripts.
 
-__*Must add your own email login info to the credentials.py file formatted as such__<br /> 
+#### Before you use
+*You must add your own email login info to the credentials.py file formatted as such<br /> 
 **Currently only support gmail as the email client, hasn't been tested with other providers
 
 ```python
@@ -13,7 +14,7 @@ gmail_login = {
 }
 ```
 
-### Example of use:
+#### Example of use:
 ```python
 from retry_wrapper import *
 
