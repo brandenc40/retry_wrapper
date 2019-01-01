@@ -2,7 +2,7 @@
 
 Adds retries to your functions with the optional email on failure
 
-__**Must add your own credentials.py file formatted as such__
+__**Must add your own email login info to the credentials.py file formatted as such__
 
 ```python
 gmail_login = {
