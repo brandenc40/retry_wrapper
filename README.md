@@ -1,6 +1,6 @@
 # Retry Wrapper
 
-Adds retries to your functions with the optional email on failure
+Adds retries to your functions with the optional email on failure. Useful for scheduled jobs or very long scripts.
 
 __*Must add your own email login info to the credentials.py file formatted as such__<br /> 
 **Currently only support gmail as the email client, hasn't been tested with other providers
