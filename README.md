@@ -14,7 +14,7 @@ gmail_login = {
 }
 ```
 
-#### Example of use:
+## Example of use:
 ```python
 from retry_wrapper import *
 
