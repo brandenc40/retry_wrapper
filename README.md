@@ -7,6 +7,7 @@ __**Must add your own email login info to the credentials.py file formatted as s
 ```python
 gmail_login = {
     'email':{YOUR EMAIL},
+    # gmail app password guide https://support.google.com/accounts/answer/185833?hl=en
     'password':{YOUR EMAIL PASSWORD} 
 }
 ```
