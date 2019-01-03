@@ -19,7 +19,7 @@ gmail_login = {
 ```
 +-- retry_wrapper
 |   +-- __init__.py
-|   +-- retry.py
+|   +-- retry_wrapper.py
 |   +-- credentials.py
 ```
     
