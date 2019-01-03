@@ -15,7 +15,15 @@ gmail_login = {
     'password':{YOUR EMAIL PASSWORD} 
 }
 ```
-
+## Must include these files for the wrapper to work
+```
++-- retry_wrapper
+|   +-- __init__.py
+|   +-- retry.py
+|   +-- credentials.py
+```
+    
+    
 ## Example of use
 ```python
 from retry_wrapper import *
