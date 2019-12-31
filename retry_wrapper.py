@@ -1,5 +1,5 @@
-import time
 import logging
+import time
 
 
 def retry(num_retries=2, delay_seconds=0.5, log_exception=False):
@@ -29,9 +29,10 @@ def retry(num_retries=2, delay_seconds=0.5, log_exception=False):
                 except Exception as e:
                     if retry_attempt == num_retries:
                         raise e
-                    if log_exception:
-                        logging.warning('{}() failed with exception: {}'.format(func.func_name, e))
+                    elif log_exception:
+                        logging.warning(
+                            '{}() failed with exception: {}'.format(func.func_name, e)
+                        )
                     retry_attempt += 1
         return run_in_loop
     return decorator
-
