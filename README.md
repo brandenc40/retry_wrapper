@@ -7,9 +7,10 @@ Adds retries to your functions
 def test_func():
     return 8/0
 
-test_func()
+test_func(fake_arg=124)
 
-> WARNING:root:{'failed_function': 'test_func', 'exception': ZeroDivisionError('division by zero',), 'attempt_number': 1, 'args': (), 'kwargs': {'fake_arg': 124}}
+> WARNING:root:{'failed_function': 'test_func', 'exception': ZeroDivisionError('division by zero',), 
+> 'attempt_number': 1, 'args': (), 'kwargs': {'fake_arg': 124}}
 > 
 > ZeroDivisionError                         Traceback (most recent call last)
 > <ipython-input-27-d640b419f916> in <module>()
