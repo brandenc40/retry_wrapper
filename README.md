@@ -1,47 +1,28 @@
 # Retry Wrapper
 
-Adds retries to your functions with the optional email on failure
+Adds retries to your functions
 
-__**Must add your own credentials.py file formatted as such__
-
-```python
-gmail_login = {
-    'email':{YOUR EMAIL},
-    'password':{YOUR EMAIL PASSWORD} 
-}
 ```
+@retry(num_retries=1, delay_seconds=3, log_exception=True)
+def test_func():
+    return 8/0
 
-### Example of use:
-```python
-from retry_wrapper import *
+test_func()
 
-from random import randint
-import credentials # your own credientials file; example above ^
-
-# setup for alert email on failure
-email_to = credentials.gmail_login['email']
-subject = 'It was not 4'
-body = 'Your script did not return the value 4 after 2 attempts'
-email_from = credentials.gmail_login['email']
-
-# retry with failure email
-@retry(max_retries=2, sec_delay_btwn_retries=2, email_on_fail=email_to, email_subject=subject,
-       email_body=body, email_from=email_from)
-def is_it_four_email():
-    """Does the random number generated equal 4?"""
-    x = randint(0, 6)
-    assert x == 4, 'This doesn\'t equal 4!!'
-    return x
-
-# retry without failure email
-@retry(max_retries=2, sec_delay_btwn_retries=2)
-def is_it_four_no_email():
-    """Does the random number generated equal 4?"""
-    x = randint(0, 6)
-    assert x == 4, 'This doesn\'t equal 4!!'
-    return x
-    
-is_it_four_no_email()
-
-is_it_four_email()
+> WARNING:root:test_func() failed with exception: integer division or modulo by zero
+> ---------------------------------------------------------------------------
+> ZeroDivisionError                         Traceback (most recent call last)
+> <ipython-input-27-d640b419f916> in <module>()
+>       3     return 8/0
+>       4 
+> ----> 5 test_func()
+> 
+> <ipython-input-26-fe691ff26d5e> in run_in_loop(*args, **kwargs)
+>      29                 except Exception as e:
+>      30                     if retry_attempt == num_retries:
+> ---> 31                         raise e
+>      32                     if log_exception:
+>      33                         logging.warning('{}() failed with exception: {}'.format(func.func_name, e))
+> 
+> ZeroDivisionError: integer division or modulo by zero
 ```

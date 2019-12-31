@@ -1,59 +1,37 @@
 import time
 import logging
-from random import randint
-from functools import wraps
-import smtplib
-from email.mime.text import MIMEText
-import credentials
-
-GMAIL_USER = credentials.gmail_login['email']
-GMAIL_PWRD = credentials.gmail_login['password']
 
 
-def retry(max_retries=2, sec_delay_btwn_retries=1, email_on_fail=None,
-          email_subject=None, email_body=None, email_from=None):
-    def retry_func(func):
-        @wraps(func)
-        def run_trys(*args, **kwargs):
-            if email_on_fail:
-                assert email_subject, 'Must include an email_subject argument'
-                assert email_body, 'Must include an email_body argument'
-                assert email_from, 'Must include an email_from argument'
-                sec_delay = sec_delay_btwn_retries
-                for i in range(1, max_retries+1):
-                    try:
-                        x = func(*args, **kwargs)
-                        return x
-                        break
-                    except Exception as e:
-                        logging.warning(
-                            'function failed, retrying.. Exception: {}'.format(e))
-                        time.sleep(sec_delay)
-                        continue
-                msg = MIMEText(str(email_body))
-                msg['Subject'] = email_subject
-                msg['From'] = email_from
-                msg['To'] = email_on_fail
-                server = smtplib.SMTP('smtp.gmail.com', 587)  # port 465 or 587
-                server.ehlo()
-                server.starttls()
-                server.ehlo()
-                server.login(GMAIL_USER, GMAIL_PWRD)
-                server.sendmail(email_from, [email_on_fail], msg.as_string())
-                server.close()
-                logging.warning('Failed after {} retries. Email sent to {}'.format(
-                    max_retries, email_on_fail))
-            else:
-                sec_delay = sec_delay_btwn_retries
-                for i in range(1, max_retries+1):
-                    try:
-                        x = func(*args, **kwargs)
-                        return x
-                    except Exception as e:
-                        logging.warning(
-                            'function failed, retrying.. Exception: {}'.format(e))
-                        time.sleep(sec_delay)
-                        continue
-                logging.warning('Failed after {} retries.'.format(max_retries))
-        return run_trys
-    return retry_func
+def retry(num_retries=2, delay_seconds=0.5, log_exception=False):
+    """
+    Decorator used to retry after failure
+
+    :arg int num_retries: (Default: 2) How many times the function should be retried
+    :arg int delay_seconds: (Default: 0.5) How long to wait between retry attempts
+    :arg boolean log_exception: (Default: False) Whether or not exceptions should be logged
+
+    Example:
+        @retry(num_retries=1, delay_seconds=3, log_exception=True)
+        def test_func():
+            return 8/0
+
+        test_func()
+    """
+    def decorator(func):
+        def run_in_loop(*args, **kwargs):
+            retry_attempt = 0
+            while retry_attempt <= num_retries:
+                if delay_seconds and retry_attempt > 0:
+                    time.sleep(delay_seconds)
+                try:
+                    x = func(*args, **kwargs)
+                    return x
+                except Exception as e:
+                    if retry_attempt == num_retries:
+                        raise e
+                    if log_exception:
+                        logging.warning('{}() failed with exception: {}'.format(func.func_name, e))
+                    retry_attempt += 1
+        return run_in_loop
+    return decorator
+
