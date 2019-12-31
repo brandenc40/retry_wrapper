@@ -3,7 +3,7 @@
 Adds retries to your functions
 
 ```python
-@retry(num_retries=1, delay_seconds=3, log_exception=True)
+@retry(num_retries=2, delay_seconds=3, log_exception=True)
 def test_func():
     return 8/0
 
@@ -12,6 +12,9 @@ test_func(fake_arg=124)
 > WARNING:root:{'failed_function': 'test_func', 'exception': ZeroDivisionError('division by zero',), 
 > 'attempt_number': 1, 'args': (), 'kwargs': {'fake_arg': 124}}
 > 
+> 
+> WARNING:root:{'failed_function': 'test_func', 'exception': ZeroDivisionError('division by zero',), 
+> 'attempt_number': 2, 'args': (), 'kwargs': {'fake_arg': 124}}
 > 
 > 
 > ZeroDivisionError                         Traceback (most recent call last)
