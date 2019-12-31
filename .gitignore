@@ -5,7 +5,3 @@
 # vscode
 .vscode/
 __pycache__
-
-# personal passwords
-credentials.py
-
