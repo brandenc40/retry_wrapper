@@ -2,7 +2,7 @@
 
 Adds retries to your functions
 
-```
+```python
 @retry(num_retries=1, delay_seconds=3, log_exception=True)
 def test_func():
     return 8/0
