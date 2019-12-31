@@ -9,7 +9,7 @@ def test_func():
 
 test_func()
 
-> WARNING:root:test_func() failed with exception: integer division or modulo by zero
+> WARNING:root:{'failed_function': 'test_func', 'exception': ZeroDivisionError('division by zero',), 'attempt_number': 1, 'args': (), 'kwargs': {'fake_arg': 124}}
 > 
 > ZeroDivisionError                         Traceback (most recent call last)
 > <ipython-input-27-d640b419f916> in <module>()
