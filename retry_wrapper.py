@@ -31,7 +31,7 @@ def retry(num_retries=2, delay_seconds=0.5, log_exception=False):
                         raise e
                     elif log_exception:
                         logging.warning(
-                            '{}() failed with exception: {}'.format(func.func_name, e)
+                            '{}() failed with exception: {}'.format(func.__name__, e)
                         )
                     retry_attempt += 1
         return run_in_loop
