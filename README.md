@@ -10,12 +10,12 @@ def test_func():
 test_func()
 
 > WARNING:root:test_func() failed with exception: integer division or modulo by zero
-> ---------------------------------------------------------------------------
+> 
 > ZeroDivisionError                         Traceback (most recent call last)
 > <ipython-input-27-d640b419f916> in <module>()
 >       3     return 8/0
 >       4 
-> ----> 5 test_func()
+> --->  5 test_func()
 > 
 > <ipython-input-26-fe691ff26d5e> in run_in_loop(*args, **kwargs)
 >      29                 except Exception as e:
